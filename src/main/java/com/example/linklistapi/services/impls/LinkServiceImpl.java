@@ -32,8 +32,8 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
-    public Link createLink(Link link) {
-        return linkRepository.save(link);
+    public Link createLink(Link request) {
+        return linkRepository.save(request);
     }
 
     @Override
