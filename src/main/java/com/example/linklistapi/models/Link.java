@@ -1,15 +1,13 @@
 package com.example.linklistapi.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Link {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LINK_SEQ")
+    @SequenceGenerator(name = "LINK_SEQ", sequenceName = "LINK_SEQ", initialValue = 0, allocationSize = 1)
     private Long id;
     private String url;
     private String title;
