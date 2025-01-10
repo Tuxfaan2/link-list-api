@@ -1,5 +1,6 @@
 package com.example.linklistapi.services.impls;
 
+import com.example.linklistapi.configuration.LinkListApiProperties;
 import com.example.linklistapi.models.Link;
 import com.example.linklistapi.services.MeilisearchLinkService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -14,10 +15,11 @@ public class MeilisearchLinkServiceImpl implements MeilisearchLinkService {
     private final Index index;
     private final ObjectMapper objectMapper;
 
-    public MeilisearchLinkServiceImpl(ObjectMapper objectMapper) throws JsonProcessingException {
+    public MeilisearchLinkServiceImpl(ObjectMapper objectMapper, LinkListApiProperties linkListApiProperties) throws JsonProcessingException {
         this.objectMapper = objectMapper;
-        Client client = new Client(new Config("http://localhost:7700", "tuxfan123"));
-        index = getOrCreateIndex(client);
+        Client client = new Client(new Config(linkListApiProperties.getMeilisearchUrl(), linkListApiProperties.getMeilisearchApiKey()));
+        client.createIndex("links");
+        index = client.getIndex("links");
     }
 
     @Override
@@ -27,10 +29,10 @@ public class MeilisearchLinkServiceImpl implements MeilisearchLinkService {
 
     private Index getOrCreateIndex(Client client) {
         Index existingIndex = client.getIndex("links");
-        if (existingIndex == null) {
-            client.createIndex("links");
-            existingIndex = client.getIndex("links");
-        }
+
+        client.createIndex("links");
+        existingIndex = client.getIndex("links");
+
         return existingIndex;
     }
 }
