@@ -1,5 +1,5 @@
 spring:
   application:
     name: link-list-api
-  h2:
-    console.enabled: true
+  liquibase:
+    change-log: db/master.xml
