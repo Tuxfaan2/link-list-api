@@ -4,12 +4,10 @@
 
 application-development.yaml:
 
-``` 
+``` yaml
 server:
   port: 
 spring:
-  liquibase:
-    change-log: db/master.xml
   datasource:
     url: 
     username: 
