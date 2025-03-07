@@ -18,4 +18,7 @@ link-list-api:
   password: develop
   meilisearch-url: 
   meilisearch-api-key: 
+  secretKey:
+  issuer:
+  accessTokenValidity:
 ```
