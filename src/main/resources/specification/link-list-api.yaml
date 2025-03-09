@@ -1,0 +1,114 @@
+openapi: "3.0.3"
+info:
+  description: link-list-api
+  title: LinkListApi
+  version: ${project.version}
+tags:
+  - name: link
+  - name: meilisearch
+paths:
+  /api/v1/link:
+    post:
+      tags:
+        - link
+      operationId: createLinkItem
+      description: create a link-item
+      requestBody:
+        description: CreateLinkItemRequest
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateLinkItemRequest"
+        required: true
+      responses:
+        "201":
+          description: MailResponse
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LinkItemDto"
+    get:
+      tags:
+        - link
+      operationId: getAllLinks
+      description: get all link-items
+      responses:
+        "200":
+          description: LinkItemResponse
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LinkItemDto"
+  /api/v1/search-link:
+    post:
+      tags:
+        - meilisearch
+      operationId: searchForLinks
+      description: search for link-items
+      requestBody:
+        description: MeilisearchSearchRequest
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MeilisearchSearchRequest"
+        required: true
+      responses:
+        "200":
+          description: LinkItemResponse
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeilisearchLinkSearchResponse"
+components:
+  schemas:
+    CreateLinkItemRequest:
+      type: object
+      required:
+        - url
+        - title
+        - description
+      properties:
+        url:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+    LinkItemDto:
+      type: object
+      required:
+        - id
+        - url
+        - title
+        - description
+      allOf:
+        - $ref: "#/components/schemas/CreateLinkItemRequest"
+      properties:
+        id:
+          type: integer
+          format: int64
+    AuthenticationResponse:
+      type: object
+      required:
+        - token
+      properties:
+        token:
+          type: string
+    MeilisearchLinkSearchResponse:
+      type: object
+      properties:
+        hits:
+          type: array
+          items:
+            $ref: "#/components/schemas/LinkItemDto"
+        limit:
+          type: integer
+    MeilisearchSearchRequest:
+      type: object
+      required:
+        - q
+      properties:
+        q:
+          type: string
