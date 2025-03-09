@@ -1,17 +1,18 @@
 package com.example.linklistapi.services;
 
-import com.example.linklistapi.models.Link;
+import com.example.linklistapi.model.CreateLinkItemRequest;
+import com.example.linklistapi.model.LinkItemDto;
 
 import java.util.List;
 
 public interface LinkService {
-    List<Link> getAllLinks();
+    List<LinkItemDto> getAllLinks();
 
-    Link getLinkById(Long id);
+    LinkItemDto getLinkById(Long id);
 
-    Link createLink(Link link);
+    LinkItemDto createLink(CreateLinkItemRequest link);
 
-    Link updateLink(Link link);
+    LinkItemDto updateLink(LinkItemDto link);
 
-    void deleteLink(Link link);
+    void deleteLink(LinkItemDto link);
 }

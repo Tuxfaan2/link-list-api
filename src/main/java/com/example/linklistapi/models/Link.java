@@ -1,5 +1,6 @@
 package com.example.linklistapi.models;
 
+import com.example.linklistapi.model.LinkItemDto;
 import jakarta.persistence.*;
 
 @Entity
@@ -44,5 +45,14 @@ public class Link {
 
     public Long getId() {
         return id;
+    }
+
+    public LinkItemDto toDto() {
+        LinkItemDto linkItemDto = new LinkItemDto();
+        linkItemDto.setId(id);
+        linkItemDto.setUrl(url);
+        linkItemDto.setTitle(title);
+        linkItemDto.setDescription(description);
+        return linkItemDto;
     }
 }

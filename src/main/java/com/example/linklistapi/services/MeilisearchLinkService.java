@@ -1,8 +1,7 @@
 package com.example.linklistapi.services;
 
-import com.example.linklistapi.models.Link;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.example.linklistapi.model.LinkItemDto;
 
 public interface MeilisearchLinkService {
-    void createNewDocument(Link link) throws JsonProcessingException;
+    void createNewDocument(LinkItemDto link);
 }
