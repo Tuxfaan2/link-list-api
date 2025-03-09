@@ -1,7 +1,7 @@
 package com.example.linklistapi.controller;
 
 import com.example.linklistapi.configuration.JwtTokenUtil;
-import com.example.linklistapi.models.AuthenticationResponse;
+import com.example.linklistapi.model.AuthenticationResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;

@@ -17,7 +17,6 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private List<DemoAuthority> authorities;
-    private boolean enabled = true;
 
     @Override
     public Collection<DemoAuthority> getAuthorities() {

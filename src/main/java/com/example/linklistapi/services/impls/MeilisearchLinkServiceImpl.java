@@ -1,7 +1,7 @@
 package com.example.linklistapi.services.impls;
 
 import com.example.linklistapi.configuration.LinkListApiProperties;
-import com.example.linklistapi.models.Link;
+import com.example.linklistapi.model.LinkItemDto;
 import com.example.linklistapi.services.MeilisearchLinkService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,8 +23,12 @@ public class MeilisearchLinkServiceImpl implements MeilisearchLinkService {
     }
 
     @Override
-    public void createNewDocument(Link link) throws JsonProcessingException {
-        index.addDocuments(objectMapper.writeValueAsString(link));
+    public void createNewDocument(LinkItemDto link) {
+        try {
+            index.addDocuments(objectMapper.writeValueAsString(link));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private Index getOrCreateIndex(Client client) {
