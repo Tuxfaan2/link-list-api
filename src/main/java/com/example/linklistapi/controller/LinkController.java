@@ -6,11 +6,11 @@ import com.example.linklistapi.model.LinkItemDto;
 import com.example.linklistapi.services.LinkService;
 import com.example.linklistapi.services.MeilisearchLinkService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class LinkController implements LinkApi {
 
     private final LinkService linkService;
