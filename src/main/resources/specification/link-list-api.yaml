@@ -41,6 +41,35 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/LinkItemDto"
+  /api/v1/link/{linkId}:
+    delete:
+      tags:
+        - link
+      operationId: deleteLinkItem
+      description: delete link-item
+      parameters:
+        - $ref: "#/components/parameters/LinkId"
+      responses:
+        "200":
+          description: LinkItemResponse
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LinkItemDto"
+    put:
+      tags:
+        - link
+      operationId: updateLinkItem
+      description: update link-item
+      parameters:
+        - $ref: "#/components/parameters/LinkId"
+      responses:
+        "200":
+          description: LinkItemResponse
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LinkItemDto"
   /api/v1/search-link:
     post:
       tags:
@@ -62,6 +91,15 @@ paths:
               schema:
                 $ref: "#/components/schemas/MeilisearchLinkSearchResponse"
 components:
+  parameters:
+    LinkId:
+      in: path
+      name: link-id
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: The link ID
   schemas:
     CreateLinkItemRequest:
       type: object
