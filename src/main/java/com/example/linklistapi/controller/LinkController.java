@@ -16,13 +16,15 @@ public class LinkController implements LinkApi {
     private final LinkService linkService;
     private final MeilisearchLinkService meilisearchLinkService;
 
-    public LinkController(LinkService linkService, MeilisearchLinkService meilisearchLinkService) {
+    public LinkController(LinkService linkService,
+                          MeilisearchLinkService meilisearchLinkService) {
         this.linkService = linkService;
         this.meilisearchLinkService = meilisearchLinkService;
     }
 
     @Override
-    public ResponseEntity<LinkItemDto> createLinkItem(CreateLinkItemRequest createLinkItemRequest) {
+    public ResponseEntity<LinkItemDto> createLinkItem(
+            CreateLinkItemRequest createLinkItemRequest) {
         LinkItemDto createdLink = linkService.createLink(createLinkItemRequest);
         meilisearchLinkService.createNewDocument(createdLink);
 
@@ -30,8 +32,20 @@ public class LinkController implements LinkApi {
     }
 
     @Override
+    public ResponseEntity<LinkItemDto> deleteLinkItem(Long linkId) {
+        LinkItemDto link = linkService.deleteLink(linkId);
+        meilisearchLinkService.deleteLink(link);
+        return ResponseEntity.ok(link);
+    }
+
+    @Override
     public ResponseEntity<List<LinkItemDto>> getAllLinks() {
         List<LinkItemDto> links = linkService.getAllLinks();
         return ResponseEntity.ok(links);
+    }
+
+    @Override
+    public ResponseEntity<LinkItemDto> updateLinkItem(Long linkId) {
+        return ResponseEntity.ok(linkService.updateLink(linkId));
     }
 }

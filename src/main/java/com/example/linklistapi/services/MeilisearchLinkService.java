@@ -7,5 +7,8 @@ import com.example.linklistapi.model.MeilisearchSearchRequest;
 public interface MeilisearchLinkService {
     void createNewDocument(LinkItemDto link);
 
-    MeilisearchLinkSearchResponse searchForLinks(MeilisearchSearchRequest meilisearchSearchRequest);
+    MeilisearchLinkSearchResponse searchForLinks(
+            MeilisearchSearchRequest meilisearchSearchRequest);
+
+    void deleteLink(LinkItemDto link);
 }

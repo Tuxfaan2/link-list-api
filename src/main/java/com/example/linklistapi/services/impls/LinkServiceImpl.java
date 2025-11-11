@@ -41,15 +41,17 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
-    public LinkItemDto updateLink(LinkItemDto link) {
-        Link linkToUpdate = getLinkFromDto(link);
-        return linkRepository.save(linkToUpdate).toDto();
+    public LinkItemDto updateLink(Long linkId) {
+        Link linkToUpdate = linkRepository.findById(linkId).orElseThrow(() -> new ResourceNotFoundException("No Link found with id: " + linkId));
+        Link newLink = linkRepository.save(linkToUpdate);
+        return newLink.toDto();
     }
 
     @Override
-    public void deleteLink(LinkItemDto link) {
-        Link linkFromDto = getLinkFromDto(link);
-        linkRepository.delete(linkFromDto);
+    public LinkItemDto deleteLink(Long linkId) {
+        Link link = linkRepository.findById(linkId).orElseThrow(() -> new ResourceNotFoundException("No Link found with id: " + linkId));
+        linkRepository.delete(link);
+        return link.toDto();
     }
 
     private Link getLinkFromRequest(CreateLinkItemRequest linkItemDto) {

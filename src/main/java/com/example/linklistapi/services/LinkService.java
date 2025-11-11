@@ -12,7 +12,7 @@ public interface LinkService {
 
     LinkItemDto createLink(CreateLinkItemRequest link);
 
-    LinkItemDto updateLink(LinkItemDto link);
+    LinkItemDto updateLink(Long linkId);
 
-    void deleteLink(LinkItemDto link);
+    LinkItemDto deleteLink(Long link);
 }
