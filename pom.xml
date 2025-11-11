@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
@@ -19,7 +20,8 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-rest</artifactId>
+            <artifactId>spring-boot-starter-data-rest
+            </artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -27,17 +29,27 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <artifactId>spring-boot-starter-security
+            </artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>
+                spring-boot-starter-oauth2-resource-server
+            </artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
+            <artifactId>
+                spring-boot-configuration-processor
+            </artifactId>
             <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <artifactId>spring-boot-starter-data-jpa
+            </artifactId>
         </dependency>
         <dependency>
             <groupId>com.meilisearch.sdk</groupId>
@@ -58,15 +70,11 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.auth0</groupId>
-            <artifactId>java-jwt</artifactId>
-            <version>4.4.0</version>
-        </dependency>
         <!-- open-api -->
         <dependency>
             <groupId>org.openapitools</groupId>
-            <artifactId>jackson-databind-nullable</artifactId>
+            <artifactId>jackson-databind-nullable
+            </artifactId>
             <version>0.2.6</version>
         </dependency>
         <dependency>
@@ -101,11 +109,13 @@
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <artifactId>spring-boot-maven-plugin
+                </artifactId>
             </plugin>
             <plugin>
                 <groupId>org.openapitools</groupId>
-                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <artifactId>openapi-generator-maven-plugin
+                </artifactId>
                 <version>7.2.0</version>
                 <executions>
                     <execution>
@@ -114,29 +124,59 @@
                         </goals>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <inputSpec>${basedir}/src/main/resources/specification/link-list-api.yaml</inputSpec>
-                            <output>target/generated-sources</output>
-                            <generatorName>spring</generatorName>
-                            <generateApis>true</generateApis>
-                            <generateApiTests>false</generateApiTests>
-                            <generateApiDocumentation>false</generateApiDocumentation>
-                            <generateModelTests>false</generateModelTests>
-                            <modelPackage>com.example.linklistapi.model</modelPackage>
-                            <invokerPackage>com.example.linklistapi.client</invokerPackage>
-                            <apiPackage>com.example.linklistapi.api</apiPackage>
+                            <inputSpec>
+                                ${basedir}/src/main/resources/specification/link-list-api.yaml
+                            </inputSpec>
+                            <output>
+                                target/generated-sources
+                            </output>
+                            <generatorName>spring
+                            </generatorName>
+                            <generateApis>true
+                            </generateApis>
+                            <generateApiTests>false
+                            </generateApiTests>
+                            <generateApiDocumentation>
+                                false
+                            </generateApiDocumentation>
+                            <generateModelTests>false
+                            </generateModelTests>
+                            <modelPackage>
+                                com.example.linklistapi.model
+                            </modelPackage>
+                            <invokerPackage>
+                                com.example.linklistapi.client
+                            </invokerPackage>
+                            <apiPackage>
+                                com.example.linklistapi.api
+                            </apiPackage>
                             <configOptions>
                                 <useTags>true</useTags>
-                                <sourceFolder>src/gen/java/main</sourceFolder>
-                                <serializationLibrary>jackson</serializationLibrary>
-                                <useBeanValidation>false</useBeanValidation>
-                                <useOptional>true</useOptional>
-                                <bigDecimalAsString>true</bigDecimalAsString>
-                                <useSwaggerUI>false</useSwaggerUI>
-                                <dateLibrary>java8</dateLibrary>
+                                <sourceFolder>
+                                    src/gen/java/main
+                                </sourceFolder>
+                                <serializationLibrary>
+                                    jackson
+                                </serializationLibrary>
+                                <useBeanValidation>false
+                                </useBeanValidation>
+                                <useOptional>true
+                                </useOptional>
+                                <bigDecimalAsString>true
+                                </bigDecimalAsString>
+                                <useSwaggerUI>false
+                                </useSwaggerUI>
+                                <dateLibrary>java8
+                                </dateLibrary>
                                 <java8>true</java8>
-                                <useAbstractionForFiles>true</useAbstractionForFiles>
-                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
-                                <interfaceOnly>true</interfaceOnly>
+                                <useAbstractionForFiles>
+                                    true
+                                </useAbstractionForFiles>
+                                <hideGenerationTimestamp>
+                                    true
+                                </hideGenerationTimestamp>
+                                <interfaceOnly>true
+                                </interfaceOnly>
                             </configOptions>
                         </configuration>
                     </execution>
