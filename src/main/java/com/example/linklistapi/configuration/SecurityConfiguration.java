@@ -17,25 +17,15 @@ public class SecurityConfiguration {
     public SecurityFilterChain configure(HttpSecurity http,
                                          JwtAuthenticationConverter authenticationConverter)
             throws Exception {
-        http.oauth2ResourceServer(resourceServer ->
-        {
-            resourceServer.jwt(jwtDecoder ->
-            {
-                jwtDecoder.jwtAuthenticationConverter(authenticationConverter);
-            });
-        });
+        http.oauth2ResourceServer(resourceServer -> resourceServer.jwt(
+                jwtDecoder -> jwtDecoder.jwtAuthenticationConverter(
+                        authenticationConverter)));
 
         http.csrf(AbstractHttpConfigurer::disable);
 
-        http.authorizeHttpRequests(requests ->
-        {
-            requests
-                    .requestMatchers("/api/v1/credentials-login",
-                            "/api/v1/token-login")
-                    .permitAll()
-                    .anyRequest()
-                    .authenticated();
-        });
+        http.authorizeHttpRequests(requests -> requests
+                .anyRequest()
+                .authenticated());
         return http.build();
     }
 
