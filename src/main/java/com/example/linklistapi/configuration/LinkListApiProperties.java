@@ -1,9 +1,6 @@
 package com.example.linklistapi.configuration;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -89,17 +86,5 @@ public class LinkListApiProperties {
 
     public void setAccessTokenPrefix(String accessTokenPrefix) {
         this.accessTokenPrefix = accessTokenPrefix;
-    }
-
-    @Bean
-    public Algorithm algorithm() {
-
-        return Algorithm.HMAC256(secretKey);
-    }
-
-    @Bean
-    public com.auth0.jwt.JWTVerifier jwtVerifier(Algorithm algorithm) {
-
-        return JWT.require(algorithm).withIssuer(issuer).build();
     }
 }
