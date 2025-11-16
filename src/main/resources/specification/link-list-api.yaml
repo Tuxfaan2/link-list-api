@@ -94,7 +94,7 @@ components:
   parameters:
     LinkId:
       in: path
-      name: link-id
+      name: linkId
       required: true
       schema:
         type: integer
