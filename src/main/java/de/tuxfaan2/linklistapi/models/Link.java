@@ -1,4 +1,4 @@
-package com.example.linklistapi.models;
+package de.tuxfaan2.linklistapi.models;
 
 import com.example.linklistapi.model.LinkItemDto;
 import jakarta.persistence.*;

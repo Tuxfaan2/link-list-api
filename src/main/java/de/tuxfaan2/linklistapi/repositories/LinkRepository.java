@@ -1,6 +1,6 @@
-package com.example.linklistapi.repositories;
+package de.tuxfaan2.linklistapi.repositories;
 
-import com.example.linklistapi.models.Link;
+import de.tuxfaan2.linklistapi.models.Link;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

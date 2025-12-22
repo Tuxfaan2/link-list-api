@@ -1,4 +1,4 @@
-package com.example.linklistapi;
+package de.tuxfaan2.linklistapi;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

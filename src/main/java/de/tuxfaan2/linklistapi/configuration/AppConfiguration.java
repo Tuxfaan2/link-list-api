@@ -1,6 +1,6 @@
-package com.example.linklistapi.configuration;
+package de.tuxfaan2.linklistapi.configuration;
 
-import com.example.linklistapi.LinkListApiProperties;
+import de.tuxfaan2.linklistapi.LinkListApiProperties;
 import com.meilisearch.sdk.Client;
 import com.meilisearch.sdk.Config;
 import com.meilisearch.sdk.Index;
