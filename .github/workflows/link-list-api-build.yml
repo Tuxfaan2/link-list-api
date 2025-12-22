@@ -4,7 +4,39 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 jobs:
-  build:
+  generate-typescript-client:
+    runs-on: ubuntu-latest
+    name: Build and push ts-client
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Extract Maven project version
+        run: echo ::set-output name=version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
+        id: project
+      - name: Get current unix timestamp
+        id: timestamp
+        uses: release-kit/unix-timestamp@v1
+      - name: Generate Typescript Client
+        uses: openapi-generators/openapitools-generator-action@v1
+        with:
+          generator: typescript-fetch
+          config-file: .config/openapi-generator-config.json
+          openapi-file: src/main/resources/specification/link-list-api.yaml
+          command-args:
+            --additional-properties=npmVersion=${{ steps.project.outputs.version }}.${{ steps.timestamp.outputs.timestamp }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@tuxfaan2'
+      - run: npm i
+        working-directory: typescript-fetch-client/
+      - run: npm publish
+        working-directory: typescript-fetch-client/
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  build-docker-image:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
