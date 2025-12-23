@@ -15,16 +15,21 @@ jobs:
     runs-on: ubuntu-latest
     name: Create release
     steps:
+    - name: Checkout
+      uses: actions/checkout@v4
     - name: Extract Maven project version
       run: echo ::set-output name=version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
       id: project
     - name: Get maven-version
       id: version
       run: |
-        VERSION="${${{ steps.project.outputs.version }}}"
-        VERSION="${VERSION//-SNAPSHOT//}"
+        VERSION="${{ steps.project.outputs.version }}"
+        VERSION="${VERSION%-SNAPSHOT}"
+        
+        echo ::set-output name=version::$VERSION
     - name: Create release-branch
       run: |
-        git checkout origin/develop
+        git checkout develop
         git checkout -b "release/${{ steps.version.outputs.version }}"
-        git push
+        git branch
+        git push --set-upstream origin
