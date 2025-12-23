@@ -1,0 +1,30 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      type:
+        type: choice
+        description: The release-type
+        options:
+          - patch
+          - minor
+          - major
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    name: Create release
+    steps:
+    - name: Extract Maven project version
+      run: echo ::set-output name=version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
+      id: project
+    - name: Get maven-version
+      id: version
+      run: |
+        VERSION="${${{ steps.project.outputs.version }}}"
+        VERSION="${VERSION//-SNAPSHOT//}"
+    - name: Create release-branch
+      run: |
+        git checkout origin/develop
+        git checkout -b "release/${{ steps.version.outputs.version }}"
+        git push

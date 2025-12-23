@@ -17,6 +17,14 @@ jobs:
       - name: Get current unix timestamp
         id: timestamp
         uses: release-kit/unix-timestamp@v1
+      - name: Normalize branch name
+        id: branch
+        run: |
+          BRANCH="${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}"
+          BRANCH="${BRANCH//\//-}"
+          BRANCH="${BRANCH^^}"
+
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
       - name: Generate Typescript Client
         uses: openapi-generators/openapitools-generator-action@v1
         with:
@@ -24,7 +32,7 @@ jobs:
           config-file: .config/openapi-generator-config.json
           openapi-file: src/main/resources/specification/link-list-api.yaml
           command-args:
-            --additional-properties=npmVersion=${{ steps.project.outputs.version }}.${{ steps.timestamp.outputs.timestamp }}
+            --additional-properties=npmVersion=${{ steps.project.outputs.version }}-${{ steps.branch.outputs.branch }}.${{ steps.timestamp.outputs.timestamp }}
       - uses: actions/setup-node@v4
         with:
           node-version: '20.x'
@@ -35,7 +43,7 @@ jobs:
       - run: npm publish
         working-directory: typescript-fetch-client/
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
   build-docker-image:
     runs-on: ubuntu-latest
     steps:
