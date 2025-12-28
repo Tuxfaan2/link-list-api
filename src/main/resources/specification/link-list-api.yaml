@@ -91,6 +91,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/MeilisearchLinkSearchResponse"
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   parameters:
     LinkId:
       in: path
@@ -150,3 +155,5 @@ components:
       properties:
         q:
           type: string
+security:
+  - bearerAuth: [ ]
