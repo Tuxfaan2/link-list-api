@@ -15,21 +15,36 @@ jobs:
     runs-on: ubuntu-latest
     name: Create release
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Extract Maven project version
-      run: echo ::set-output name=version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
-      id: project
-    - name: Get maven-version
-      id: version
-      run: |
-        VERSION="${{ steps.project.outputs.version }}"
-        VERSION="${VERSION%-SNAPSHOT}"
-        
-        echo ::set-output name=version::$VERSION
-    - name: Create release-branch
-      run: |
-        git checkout develop
-        git checkout -b "release/${{ steps.version.outputs.version }}"
-        git branch
-        git push --set-upstream origin
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup git Config
+        run: |
+          git config --global user.name "Release"
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Extract Maven version (without -SNAPSHOT)
+        id: maven_version
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          RELEASE_VERSION=${VERSION%-SNAPSHOT}
+          echo "release_version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create release branch
+        run: |
+          BRANCH_NAME="release/${{ steps.maven_version.outputs.release_version }}"
+          git checkout -b "$BRANCH_NAME"
+          git push origin "$BRANCH_NAME"
+      - name: Set release version
+        run: |
+          mvn versions:set -DgenerateBackupPoms=false -DnewVersion=${{ steps.maven_version.outputs.release_version }}
+      - name: Push and commit release branch
+        run: |
+          BRANCH_NAME="release/${{ steps.maven_version.outputs.release_version }}"
+          git add .
+          git commit -m "Update version to ${{ steps.maven_version.outputs.release_version }}"
+          git push origin "$BRANCH_NAME"
