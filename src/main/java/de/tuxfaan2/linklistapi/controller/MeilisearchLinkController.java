@@ -1,9 +1,9 @@
-package com.example.linklistapi.controller;
+package de.tuxfaan2.linklistapi.controller;
 
 import com.example.linklistapi.api.MeilisearchApi;
 import com.example.linklistapi.model.MeilisearchLinkSearchResponse;
 import com.example.linklistapi.model.MeilisearchSearchRequest;
-import com.example.linklistapi.services.MeilisearchLinkService;
+import de.tuxfaan2.linklistapi.services.MeilisearchLinkService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 

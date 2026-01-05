@@ -1,9 +1,9 @@
-package com.example.linklistapi.services.impls;
+package de.tuxfaan2.linklistapi.services.impls;
 
 import com.example.linklistapi.model.LinkItemDto;
 import com.example.linklistapi.model.MeilisearchLinkSearchResponse;
 import com.example.linklistapi.model.MeilisearchSearchRequest;
-import com.example.linklistapi.services.MeilisearchLinkService;
+import de.tuxfaan2.linklistapi.services.MeilisearchLinkService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meilisearch.sdk.Index;

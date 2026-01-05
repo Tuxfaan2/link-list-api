@@ -1,10 +1,10 @@
-package com.example.linklistapi.controller;
+package de.tuxfaan2.linklistapi.controller;
 
 import com.example.linklistapi.api.LinkApi;
 import com.example.linklistapi.model.CreateLinkItemRequest;
 import com.example.linklistapi.model.LinkItemDto;
-import com.example.linklistapi.services.LinkService;
-import com.example.linklistapi.services.MeilisearchLinkService;
+import de.tuxfaan2.linklistapi.services.LinkService;
+import de.tuxfaan2.linklistapi.services.MeilisearchLinkService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 

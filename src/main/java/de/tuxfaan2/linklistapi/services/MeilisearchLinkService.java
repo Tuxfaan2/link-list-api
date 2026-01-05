@@ -1,4 +1,4 @@
-package com.example.linklistapi.services;
+package de.tuxfaan2.linklistapi.services;
 
 import com.example.linklistapi.model.LinkItemDto;
 import com.example.linklistapi.model.MeilisearchLinkSearchResponse;

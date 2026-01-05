@@ -1,10 +1,10 @@
-package com.example.linklistapi.services.impls;
+package de.tuxfaan2.linklistapi.services.impls;
 
 import com.example.linklistapi.model.CreateLinkItemRequest;
 import com.example.linklistapi.model.LinkItemDto;
-import com.example.linklistapi.models.Link;
-import com.example.linklistapi.repositories.LinkRepository;
-import com.example.linklistapi.services.LinkService;
+import de.tuxfaan2.linklistapi.models.Link;
+import de.tuxfaan2.linklistapi.repositories.LinkRepository;
+import de.tuxfaan2.linklistapi.services.LinkService;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.example.linklistapi.controller;
+package de.tuxfaan2.linklistapi.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
