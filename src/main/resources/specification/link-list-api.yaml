@@ -141,6 +141,10 @@ components:
           type: string
     MeilisearchLinkSearchResponse:
       type: object
+      required:
+        - limit
+        - page
+        - totalPages
       properties:
         hits:
           type: array
@@ -148,12 +152,22 @@ components:
             $ref: "#/components/schemas/LinkItemDto"
         limit:
           type: integer
+        page:
+          type: integer
+        totalPages:
+          type: integer
     MeilisearchSearchRequest:
       type: object
       required:
         - q
+        - page
+        - hitsPerPage
       properties:
         q:
           type: string
+        page:
+          type: integer
+        hitsPerPage:
+          type: integer
 security:
   - bearerAuth: [ ]

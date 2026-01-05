@@ -7,11 +7,11 @@ import com.example.linklistapi.services.MeilisearchLinkService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meilisearch.sdk.Index;
-import com.meilisearch.sdk.model.SearchResult;
+import com.meilisearch.sdk.SearchRequest;
+import com.meilisearch.sdk.model.SearchResultPaginated;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MeilisearchLinkServiceImpl implements MeilisearchLinkService {
@@ -36,8 +36,11 @@ public class MeilisearchLinkServiceImpl implements MeilisearchLinkService {
     @Override
     public MeilisearchLinkSearchResponse searchForLinks(
             MeilisearchSearchRequest meilisearchSearchRequest) {
+        SearchRequest searchRequest = new SearchRequest(meilisearchSearchRequest.getQ());
+        searchRequest.setPage(meilisearchSearchRequest.getPage());
+        searchRequest.setHitsPerPage(meilisearchSearchRequest.getHitsPerPage());
         return toMeilisearchLinkSearchResponse(
-                index.search(meilisearchSearchRequest.getQ()));
+                searchRequest);
     }
 
     @Override
@@ -48,18 +51,22 @@ public class MeilisearchLinkServiceImpl implements MeilisearchLinkService {
     }
 
     private MeilisearchLinkSearchResponse toMeilisearchLinkSearchResponse(
-            SearchResult searchResult) {
+            SearchRequest searchRequest) {
+        SearchResultPaginated searchResultPaginated = (SearchResultPaginated) index.search(searchRequest);
         MeilisearchLinkSearchResponse meilisearchLinkSearchResponse =
                 new MeilisearchLinkSearchResponse();
-        List<LinkItemDto> links = searchResult
+
+        List<LinkItemDto> links = searchResultPaginated
                 .getHits()
                 .stream()
                 .map(link -> objectMapper.convertValue(link, LinkItemDto.class))
                 .toList();
 
         meilisearchLinkSearchResponse.setLimit(
-                Optional.of(searchResult.getLimit()));
+                searchResultPaginated.getHitsPerPage());
         meilisearchLinkSearchResponse.setHits(links);
+        meilisearchLinkSearchResponse.setPage(searchResultPaginated.getPage());
+        meilisearchLinkSearchResponse.setTotalPages(searchResultPaginated.getTotalPages());
         return meilisearchLinkSearchResponse;
     }
 }
