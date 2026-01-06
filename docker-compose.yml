@@ -1,0 +1,41 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_DB: devdb
+      POSTGRES_USER: devuser
+      POSTGRES_PASSWORD: devpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  meilisearch:
+    image: getmeili/meilisearch:latest
+    container_name: meilisearch
+    environment:
+      MEILI_ENV: development
+      MEILI_MASTER_KEY: masterKey123
+    ports:
+      - "7700:7700"
+    volumes:
+      - ./data/meilisearch:/meili_data
+    restart: unless-stopped
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:25.0
+    container_name: keycloak
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data/keycloak:/opt/keycloak/data
+      - ./dev-realm.json:/opt/keycloak/data/import/dev-realm.json:ro
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command:
+      - start-dev
+      - --import-realm
+    restart: unless-stopped
