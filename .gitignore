@@ -35,3 +35,4 @@ build/
 ### development ###
 /src/main/resources/application-development.yml
 DataBase.trace.db
+data/
