@@ -6,7 +6,57 @@ info:
 tags:
   - name: link
   - name: meilisearch
+  - name: group
 paths:
+  /api/v1/group:
+    post:
+      tags:
+        - group
+      operationId: createGroup
+      description: create a group
+      requestBody:
+        description: CreateGroupRequest
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateGroupRequest"
+        required: true
+      responses:
+        "201":
+          description: GroupResponse
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GroupDto"
+    get:
+      tags:
+        - group
+      operationId: getGroups
+      description: Get groups
+      responses:
+        "200":
+          description: GroupResponse
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GroupDto"
+  /api/v1/group/{groupId}:
+    patch:
+      tags:
+        - group
+      operationId: joinGroup
+      description: join a group
+      parameters:
+        - $ref: "#/components/parameters/GroupId"
+      responses:
+        "200":
+          description: GroupResponse
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GroupDto"
   /api/v1/link:
     post:
       tags:
@@ -22,7 +72,7 @@ paths:
         required: true
       responses:
         "201":
-          description: MailResponse
+          description: LinkResponse
           content:
             application/json:
               schema:
@@ -105,7 +155,34 @@ components:
         type: integer
         format: int64
       description: The link ID
+    GroupId:
+      in: path
+      name: groupId
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: The group ID
   schemas:
+    CreateGroupRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        users:
+          type: array
+          items:
+            type: string
+    GroupDto:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/CreateGroupRequest"
+      properties:
+        id:
+          type: integer
+          format: int64
     CreateLinkItemRequest:
       type: object
       required:
