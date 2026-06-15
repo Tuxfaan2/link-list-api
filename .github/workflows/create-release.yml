@@ -11,9 +11,11 @@ on:
           - patch
           - minor
           - major
-  push:
+  pull_request:
     branches:
-      - 'release/**'
+      - main
+    types:
+      - closed
 
 jobs:
   create-release-branch:
@@ -91,14 +93,44 @@ jobs:
 
           echo "Created and pushed branch: $BRANCH_NAME"
 
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          RELEASE_VERSION="${{ steps.release_version.outputs.version }}"
+          CURRENT_VERSION="${{ steps.current_version.outputs.version }}"
+
+          gh pr create \
+            --base master \
+            --head "release/$RELEASE_VERSION" \
+            --title "Release $RELEASE_VERSION" \
+            --body "## Release $RELEASE_VERSION
+
+          This PR prepares release version $RELEASE_VERSION.
+
+          ### Changes
+          - Updated version from $CURRENT_VERSION to $RELEASE_VERSION
+
+          ### Next Steps
+          1. Review the changes
+          2. Merge this PR to trigger the release workflow
+          3. The workflow will automatically:
+             - Build and publish artifacts (Docker image, TypeScript client)
+             - Create GitHub release
+             - Update develop to next snapshot version
+
+          ---
+          🤖 Generated with GitHub Actions"
+
   finalize-release:
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/release/')
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release/')
     runs-on: ubuntu-latest
     name: Finalize release and build artifacts
     steps:
       - name: Checkout release branch
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
 
       - name: Set up JDK 21
@@ -111,7 +143,7 @@ jobs:
       - name: Extract version from branch
         id: version
         run: |
-          BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
           VERSION="${BRANCH_NAME#release/}"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Release version: $VERSION"
@@ -181,13 +213,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Merge to main
-        run: |
-          git fetch origin main
-          git checkout main
-          git merge --no-ff ${{ github.ref }} -m "Merge release ${{ steps.version.outputs.version }}"
-          git push origin main
 
       - name: Update develop to next snapshot
         run: |
