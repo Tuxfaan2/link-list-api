@@ -31,4 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### development ###
 /src/main/resources/application-development.yml
+DataBase.trace.db
+data/

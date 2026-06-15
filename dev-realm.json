@@ -1,0 +1,47 @@
+{
+  "realm": "dev-realm",
+  "enabled": true,
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "clients": [
+    {
+      "clientId": "link-list-api",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "dev-secret",
+      "redirectUris": ["http://localhost:8081/*"],
+      "webOrigins": ["*"],
+      "directAccessGrantsEnabled": true,
+      "standardFlowEnabled": true
+    }
+  ],
+  "users": [
+    {
+      "username": "testuser",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Test",
+      "lastName": "User",
+      "email": "test@example.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "testpassword",
+          "temporary": false
+        }
+      ],
+      "requiredActions": [],
+      "realmRoles": ["user", "default-roles-dev-realm"]
+    }
+  ],
+  "roles": {
+    "realm": [
+      {
+        "name": "user"
+      },
+      {
+        "name": "admin"
+      }
+    ]
+  }
+}

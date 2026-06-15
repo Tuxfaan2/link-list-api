@@ -1,0 +1,9 @@
+{
+  "npmName": "@tuxfaan2/link-list-api",
+  "snapshot": false,
+  "supportsES6": true,
+  "modelPropertyNaming": "camelCase",
+  "paramNaming": "camelCase",
+  "sortModelPropertiesByRequiredFlag": true,
+  "sortParamsByRequiredFlag": true
+}
